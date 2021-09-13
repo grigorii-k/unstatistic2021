@@ -43,30 +43,9 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "Region",
 									"type": "String",
-									"ordinal": 1
-								},
-								"sink": {
-									"name": "FileName",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"type": "String",
-									"ordinal": 2
-								},
-								"sink": {
-									"name": "SourceItemId",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"type": "String",
-									"ordinal": 3
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "RegionName",
@@ -76,8 +55,9 @@
 							},
 							{
 								"source": {
+									"name": "Sub Region",
 									"type": "String",
-									"ordinal": 4
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SubRegionName",
@@ -87,8 +67,9 @@
 							},
 							{
 								"source": {
+									"name": "Country",
 									"type": "String",
-									"ordinal": 5
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "CountryName",
@@ -98,8 +79,9 @@
 							},
 							{
 								"source": {
+									"name": "Year",
 									"type": "String",
-									"ordinal": 6
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Year",
@@ -108,38 +90,15 @@
 								}
 							},
 							{
+								"source": {
+									"name": "Count",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
 									"name": "Count",
 									"type": "String",
 									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "sysCreatedAt",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"sink": {
-									"name": "sysChangedAt",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"sink": {
-									"name": "sysChangedBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"sink": {
-									"name": "sysCreatedBy",
-									"type": "Int32",
-									"physicalType": "int"
 								}
 							}
 						],
@@ -218,17 +177,9 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Set variable PipelineExecutionDescription",
+						"activity": "Update FileName",
 						"dependencyConditions": [
-							"Succeeded",
-							"Skipped"
-						]
-					},
-					{
-						"activity": "Copy uncrime to SQL",
-						"dependencyConditions": [
-							"Succeeded",
-							"Skipped"
+							"Succeeded"
 						]
 					}
 				],
@@ -279,40 +230,35 @@
 				}
 			},
 			{
-				"name": "Set variable PipelineExecutionDescription",
-				"type": "SetVariable",
+				"name": "Update FileName",
+				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Set variable PipelineExecutionStatus",
+						"activity": "Copy uncrime to SQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					}
 				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "PipelineExecutionDescription",
-					"value": {
-						"value": "@activity('Copy population to SQL').ErrorMessage",
-						"type": "Expression"
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "@replace('UPDATE [staging].[uncrime_untyped] \n\n  SET [FileName] = ''variablefilename'' \n\n  WHERE [FileName] IS NULL \n\nSELECT 1;' \n\n, 'variablefilename' \n\n,@variables('FileName')  \n\n) ",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "dst_sql_dummy",
+						"type": "DatasetReference"
 					}
-				}
-			},
-			{
-				"name": "Set variable PipelineExecutionStatus",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Copy uncrime to SQL",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "PipelineExecutionStatus",
-					"value": "Fail"
 				}
 			}
 		],
@@ -328,16 +274,6 @@
 			"FileName": {
 				"type": "string",
 				"defaultValue": "burglary.csv"
-			}
-		},
-		"variables": {
-			"PipelineExecutionDescription": {
-				"type": "String",
-				"defaultValue": "Succeed"
-			},
-			"PipelineExecutionStatus": {
-				"type": "String",
-				"defaultValue": "Succeed"
 			}
 		},
 		"folder": {
