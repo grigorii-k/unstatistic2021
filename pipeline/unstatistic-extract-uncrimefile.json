@@ -1,10 +1,10 @@
 {
-	"name": "unstatistic-extract-population",
+	"name": "unstatistic-extract-uncrimefile",
 	"properties": {
 		"description": "Extract data from csv file to SQL database.",
 		"activities": [
 			{
-				"name": "Copy population to SQL",
+				"name": "Copy uncrime to SQL",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -856,7 +856,7 @@
 						]
 					},
 					{
-						"activity": "Copy population to SQL",
+						"activity": "Copy uncrime to SQL",
 						"dependencyConditions": [
 							"Succeeded",
 							"Skipped"
@@ -934,7 +934,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Copy population to SQL",
+						"activity": "Copy uncrime to SQL",
 						"dependencyConditions": [
 							"Failed"
 						]
