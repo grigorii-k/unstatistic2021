@@ -237,17 +237,15 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy countries to SQL",
+						"activity": "Set variable PipelineExecutionDescription",
 						"dependencyConditions": [
-							"Succeeded",
-							"Skipped"
+							"Succeeded"
 						]
 					},
 					{
-						"activity": "Set variable PipelineExecutionDescription",
+						"activity": "Copy countries to SQL",
 						"dependencyConditions": [
-							"Succeeded",
-							"Skipped"
+							"Succeeded"
 						]
 					}
 				],
@@ -311,10 +309,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "PipelineExecutionDescription",
-					"value": {
-						"value": "@activity('Copy countries to SQL').output",
-						"type": "Expression"
-					}
+					"value": "Fail"
 				}
 			},
 			{
@@ -331,18 +326,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "PipelineExecutionStatus",
-					"value": "failed"
+					"value": "Fail"
 				}
 			}
 		],
 		"variables": {
 			"PipelineExecutionDescription": {
 				"type": "String",
-				"defaultValue": "succeed"
+				"defaultValue": "Succeed"
 			},
 			"PipelineExecutionStatus": {
 				"type": "String",
-				"defaultValue": "succeed"
+				"defaultValue": "Succeed"
 			}
 		},
 		"folder": {
