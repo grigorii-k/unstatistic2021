@@ -251,7 +251,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "@replace('UPDATE [staging].[uncrime_untyped] \n\n  SET [FileName] = ''variablefilename'' \n\n  WHERE [FileName] IS NULL \n\nSELECT 1;' \n\n, 'variablefilename' \n\n,@variables('FileName')  \n\n) ",
+						"sqlReaderQuery": {
+							"value": "@replace('UPDATE [staging].[uncrime_untyped] \n\n  SET [FileName] = ''variablefilename'' \n\n  WHERE [FileName] IS NULL \n\nSELECT 1;' \n\n, 'variablefilename' \n\n,pipeline().parameters.FileName\n\n)",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -274,6 +277,16 @@
 			"FileName": {
 				"type": "string",
 				"defaultValue": "burglary.csv"
+			}
+		},
+		"variables": {
+			"PipelineExecutionDescription": {
+				"type": "String",
+				"defaultValue": "Succeed"
+			},
+			"PipelineExecutionStatus": {
+				"type": "String",
+				"defaultValue": "Succeed"
 			}
 		},
 		"folder": {
