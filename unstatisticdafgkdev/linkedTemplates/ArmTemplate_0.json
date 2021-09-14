@@ -122,80 +122,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/src_csv_countries')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "unstatisticstac",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "ISOcountries.csv",
-						"folderPath": "CrimeStat.Source.Countries",
-						"container": "unstatistic-sourcefiles"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "name",
-						"type": "String"
-					},
-					{
-						"name": "alpha-2",
-						"type": "String"
-					},
-					{
-						"name": "alpha-3",
-						"type": "String"
-					},
-					{
-						"name": "country-code",
-						"type": "String"
-					},
-					{
-						"name": "iso_3166-2",
-						"type": "String"
-					},
-					{
-						"name": "region",
-						"type": "String"
-					},
-					{
-						"name": "sub-region",
-						"type": "String"
-					},
-					{
-						"name": "intermediate-region",
-						"type": "String"
-					},
-					{
-						"name": "region-code",
-						"type": "String"
-					},
-					{
-						"name": "sub-region-code",
-						"type": "String"
-					},
-					{
-						"name": "intermediate-region-code",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dst_sql_countries')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -286,6 +212,809 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dst_sql_dummy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticsqlsgkdevlinkedservice",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dst_sql_population_untyped')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticsqlsgkdevlinkedservice",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SourceItemId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CountryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CountryCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IndicatorName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IndicatorCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1960",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1961",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1962",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1963",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1964",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1965",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1966",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1967",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1968",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1969",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1970",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1971",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1972",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1973",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1974",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1975",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1976",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1977",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1978",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1979",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1980",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1981",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1982",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1983",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1984",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1985",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1986",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1987",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1988",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1989",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1990",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1991",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1992",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1993",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1994",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1995",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1996",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1997",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1998",
+						"type": "nvarchar"
+					},
+					{
+						"name": "1999",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2000",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2001",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2002",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2003",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2004",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2005",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2006",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2007",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2008",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2009",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2010",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2011",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2012",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2013",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2014",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2015",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2016",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2017",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2018",
+						"type": "nvarchar"
+					},
+					{
+						"name": "2019",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sysCreatedAt",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "sysChangedAt",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "sysCreatedBy",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "sysChangedBy",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "population_untyped"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dst_sql_uncrime_untyped')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticsqlsgkdevlinkedservice",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SourceItemId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubRegionName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CountryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Count",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sysCreatedAt",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "sysChangedAt",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "sysChangedBy",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "sysCreatedBy",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "uncrime_untyped"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/src_csv_countries')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticstac",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "ISOcountries.csv",
+						"folderPath": "CrimeStat.Source.Countries",
+						"container": "unstatistic-sourcefiles"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "alpha-2",
+						"type": "String"
+					},
+					{
+						"name": "alpha-3",
+						"type": "String"
+					},
+					{
+						"name": "country-code",
+						"type": "String"
+					},
+					{
+						"name": "iso_3166-2",
+						"type": "String"
+					},
+					{
+						"name": "region",
+						"type": "String"
+					},
+					{
+						"name": "sub-region",
+						"type": "String"
+					},
+					{
+						"name": "intermediate-region",
+						"type": "String"
+					},
+					{
+						"name": "region-code",
+						"type": "String"
+					},
+					{
+						"name": "sub-region-code",
+						"type": "String"
+					},
+					{
+						"name": "intermediate-region-code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/src_csv_population')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticstac",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "WorldBankPopulation.csv",
+						"folderPath": "CrimeStat.Source.WorldBank",
+						"container": "unstatistic-sourcefiles"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Country Name",
+						"type": "String"
+					},
+					{
+						"name": "Country Code",
+						"type": "String"
+					},
+					{
+						"name": "Indicator Name",
+						"type": "String"
+					},
+					{
+						"name": "Indicator Code",
+						"type": "String"
+					},
+					{
+						"name": "1960",
+						"type": "String"
+					},
+					{
+						"name": "1961",
+						"type": "String"
+					},
+					{
+						"name": "1962",
+						"type": "String"
+					},
+					{
+						"name": "1963",
+						"type": "String"
+					},
+					{
+						"name": "1964",
+						"type": "String"
+					},
+					{
+						"name": "1965",
+						"type": "String"
+					},
+					{
+						"name": "1966",
+						"type": "String"
+					},
+					{
+						"name": "1967",
+						"type": "String"
+					},
+					{
+						"name": "1968",
+						"type": "String"
+					},
+					{
+						"name": "1969",
+						"type": "String"
+					},
+					{
+						"name": "1970",
+						"type": "String"
+					},
+					{
+						"name": "1971",
+						"type": "String"
+					},
+					{
+						"name": "1972",
+						"type": "String"
+					},
+					{
+						"name": "1973",
+						"type": "String"
+					},
+					{
+						"name": "1974",
+						"type": "String"
+					},
+					{
+						"name": "1975",
+						"type": "String"
+					},
+					{
+						"name": "1976",
+						"type": "String"
+					},
+					{
+						"name": "1977",
+						"type": "String"
+					},
+					{
+						"name": "1978",
+						"type": "String"
+					},
+					{
+						"name": "1979",
+						"type": "String"
+					},
+					{
+						"name": "1980",
+						"type": "String"
+					},
+					{
+						"name": "1981",
+						"type": "String"
+					},
+					{
+						"name": "1982",
+						"type": "String"
+					},
+					{
+						"name": "1983",
+						"type": "String"
+					},
+					{
+						"name": "1984",
+						"type": "String"
+					},
+					{
+						"name": "1985",
+						"type": "String"
+					},
+					{
+						"name": "1986",
+						"type": "String"
+					},
+					{
+						"name": "1987",
+						"type": "String"
+					},
+					{
+						"name": "1988",
+						"type": "String"
+					},
+					{
+						"name": "1989",
+						"type": "String"
+					},
+					{
+						"name": "1990",
+						"type": "String"
+					},
+					{
+						"name": "1991",
+						"type": "String"
+					},
+					{
+						"name": "1992",
+						"type": "String"
+					},
+					{
+						"name": "1993",
+						"type": "String"
+					},
+					{
+						"name": "1994",
+						"type": "String"
+					},
+					{
+						"name": "1995",
+						"type": "String"
+					},
+					{
+						"name": "1996",
+						"type": "String"
+					},
+					{
+						"name": "1997",
+						"type": "String"
+					},
+					{
+						"name": "1998",
+						"type": "String"
+					},
+					{
+						"name": "1999",
+						"type": "String"
+					},
+					{
+						"name": "2000",
+						"type": "String"
+					},
+					{
+						"name": "2001",
+						"type": "String"
+					},
+					{
+						"name": "2002",
+						"type": "String"
+					},
+					{
+						"name": "2003",
+						"type": "String"
+					},
+					{
+						"name": "2004",
+						"type": "String"
+					},
+					{
+						"name": "2005",
+						"type": "String"
+					},
+					{
+						"name": "2006",
+						"type": "String"
+					},
+					{
+						"name": "2007",
+						"type": "String"
+					},
+					{
+						"name": "2008",
+						"type": "String"
+					},
+					{
+						"name": "2009",
+						"type": "String"
+					},
+					{
+						"name": "2010",
+						"type": "String"
+					},
+					{
+						"name": "2011",
+						"type": "String"
+					},
+					{
+						"name": "2012",
+						"type": "String"
+					},
+					{
+						"name": "2013",
+						"type": "String"
+					},
+					{
+						"name": "2014",
+						"type": "String"
+					},
+					{
+						"name": "2015",
+						"type": "String"
+					},
+					{
+						"name": "2016",
+						"type": "String"
+					},
+					{
+						"name": "2017",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/src_csv_uncrime')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "unstatisticstac",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Container": {
+						"type": "string",
+						"defaultValue": "unstatistic-sourcefiles"
+					},
+					"Path": {
+						"type": "string",
+						"defaultValue": "CrimeStat.Source.UNCrime"
+					},
+					"FileName": {
+						"type": "string",
+						"defaultValue": "burglary.csv"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().Path",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().Container",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
 			]
 		},
 		{
@@ -1269,7 +1998,8 @@
 							{
 								"activity": "Copy countries to SQL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Succeeded",
+									"Skipped"
 								]
 							}
 						],
@@ -1333,7 +2063,10 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "PipelineExecutionDescription",
-							"value": "Fail"
+							"value": {
+								"value": "@activity('Copy countries to SQL').ErrorMessage",
+								"type": "Expression"
+							}
 						}
 					},
 					{
@@ -1375,6 +2108,1291 @@
 				"[concat(variables('factoryId'), '/datasets/src_csv_countries')]",
 				"[concat(variables('factoryId'), '/datasets/dst_sql_countries')]",
 				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/unstatistic-extract-population')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Extract data from csv file to SQL database.",
+				"activities": [
+					{
+						"name": "Copy population to SQL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SP PipelineExecutionHistory_Create",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [staging].[population_untyped];",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Country Name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Country Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Indicator Name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "IndicatorName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Indicator Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "IndicatorCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1960",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1960",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1961",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1961",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1962",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1962",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1963",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1963",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1964",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1964",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1965",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1965",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1966",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1966",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1967",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1967",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1968",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1968",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1969",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1969",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1970",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1970",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1971",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1971",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1972",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1972",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1973",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1973",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1974",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1974",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1975",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1975",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1976",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1976",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1977",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1977",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1978",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1978",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1979",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1979",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1980",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1980",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1981",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1981",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1982",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1982",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1983",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1983",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1984",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1984",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1985",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1985",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1986",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1986",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1987",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1987",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1988",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1988",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1989",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1989",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1990",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1990",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1991",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1991",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1992",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1992",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1993",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1993",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1994",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1994",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1995",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1995",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1996",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1996",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1997",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1997",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1998",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1998",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "1999",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "1999",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2000",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2000",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2001",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2001",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2002",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2002",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2003",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2003",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2004",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2004",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2005",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2005",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2006",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2006",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2007",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2007",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2008",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2008",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2009",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2009",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2010",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2010",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2011",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2011",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2012",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2012",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2013",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2013",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2014",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2014",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2015",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2015",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2016",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2016",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "2017",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2017",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "src_csv_population",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dst_sql_population_untyped",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SP PipelineExecutionHistory_Create",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[adf].[usp_PipelineExecutionHistory_Create]",
+							"storedProcedureParameters": {
+								"PipelineName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineRunId": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "unstatisticsqlsgkdevlinkedservice",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "SP PipelineExecutionHistory_Update",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Set variable PipelineExecutionDescription",
+								"dependencyConditions": [
+									"Succeeded",
+									"Skipped"
+								]
+							},
+							{
+								"activity": "Copy population to SQL",
+								"dependencyConditions": [
+									"Succeeded",
+									"Skipped"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[adf].[usp_PipelineExecutionHistory_Update]",
+							"storedProcedureParameters": {
+								"Description": {
+									"value": {
+										"value": "@variables('PipelineExecutionDescription')",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineRunId": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Status": {
+									"value": {
+										"value": "@variables('PipelineExecutionStatus')",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "unstatisticsqlsgkdevlinkedservice",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Set variable PipelineExecutionDescription",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable PipelineExecutionStatus",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "PipelineExecutionDescription",
+							"value": {
+								"value": "@activity('Copy population to SQL').ErrorMessage",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set variable PipelineExecutionStatus",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Copy population to SQL",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "PipelineExecutionStatus",
+							"value": "Fail"
+						}
+					}
+				],
+				"variables": {
+					"PipelineExecutionDescription": {
+						"type": "String",
+						"defaultValue": "Succeed"
+					},
+					"PipelineExecutionStatus": {
+						"type": "String",
+						"defaultValue": "Succeed"
+					}
+				},
+				"folder": {
+					"name": "unstatistic"
+				},
+				"annotations": [
+					"extract"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/src_csv_population')]",
+				"[concat(variables('factoryId'), '/datasets/dst_sql_population_untyped')]",
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/unstatistic-extract-uncrimefile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Extract data from csv file to SQL database.",
+				"activities": [
+					{
+						"name": "Copy uncrime to SQL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SP PipelineExecutionHistory_Create",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Region",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RegionName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub Region",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SubRegionName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Count",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Count",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "src_csv_uncrime",
+								"type": "DatasetReference",
+								"parameters": {
+									"Container": {
+										"value": "@pipeline().parameters.Container",
+										"type": "Expression"
+									},
+									"Path": {
+										"value": "@pipeline().parameters.Path",
+										"type": "Expression"
+									},
+									"FileName": {
+										"value": "@pipeline().parameters.FileName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dst_sql_uncrime_untyped",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SP PipelineExecutionHistory_Create",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[adf].[usp_PipelineExecutionHistory_Create]",
+							"storedProcedureParameters": {
+								"PipelineName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineRunId": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "unstatisticsqlsgkdevlinkedservice",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "SP PipelineExecutionHistory_Update",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Update FileName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[adf].[usp_PipelineExecutionHistory_Update]",
+							"storedProcedureParameters": {
+								"Description": {
+									"value": {
+										"value": "@variables('PipelineExecutionDescription')",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineRunId": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Status": {
+									"value": {
+										"value": "@variables('PipelineExecutionStatus')",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "unstatisticsqlsgkdevlinkedservice",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Update FileName",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy uncrime to SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@replace('UPDATE [staging].[uncrime_untyped] \n\n  SET [FileName] = ''variablefilename'' \n\n  WHERE [FileName] IS NULL \n\nSELECT 1;' \n\n, 'variablefilename' \n\n,pipeline().parameters.FileName\n\n)",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "dst_sql_dummy",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"parameters": {
+					"Container": {
+						"type": "string",
+						"defaultValue": "unstatistic-sourcefiles"
+					},
+					"Path": {
+						"type": "string",
+						"defaultValue": "CrimeStat.Source.UNCrime"
+					},
+					"FileName": {
+						"type": "string",
+						"defaultValue": "burglary.csv"
+					}
+				},
+				"variables": {
+					"PipelineExecutionDescription": {
+						"type": "String",
+						"defaultValue": "Succeed"
+					},
+					"PipelineExecutionStatus": {
+						"type": "String",
+						"defaultValue": "Succeed"
+					}
+				},
+				"folder": {
+					"name": "unstatistic"
+				},
+				"annotations": [
+					"extract"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/src_csv_uncrime')]",
+				"[concat(variables('factoryId'), '/datasets/dst_sql_uncrime_untyped')]",
+				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]",
+				"[concat(variables('factoryId'), '/datasets/dst_sql_dummy')]"
 			]
 		},
 		{

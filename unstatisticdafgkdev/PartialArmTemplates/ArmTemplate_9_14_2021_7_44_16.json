@@ -6,753 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "unstatisticdafgkdev"
-		},
-		"msbiazurelinkedservice_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'msbiazurelinkedservice'"
-		},
-		"unstatisticsqlsgkdevlinkedservice_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'unstatisticsqlsgkdevlinkedservice'"
-		},
-		"unstatisticstac_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'unstatisticstac'"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/first_pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_a90",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy_a90",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "task.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "task.@{item().destination.table}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "AzureSqlSink",
-											"tableOption": "autoCreate"
-										},
-										"enableStaging": false,
-										"validateDataConsistency": false,
-										"translator": {
-											"value": "@item().copyActivity.translator",
-											"type": "Expression"
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "SourceDataset_a90",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DestinationDataset_a90",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().destination.table"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "Course"
-								},
-								"destination": {
-									"table": "Course"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "CourseId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "CourseId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "CourseName",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "CourseName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysCreatedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysChangedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysCreatedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysChangedBy",
-													"type": "Int32"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "SubTask"
-								},
-								"destination": {
-									"table": "SubTask"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "SubTaskId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "SubTaskId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "TaskId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "TaskId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "SubTaskName",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "SubTaskName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Description",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Description",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Topic",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Topic",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysCreatedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysChangedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysCreatedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysChangedBy",
-													"type": "Int32"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "SubTaskLog"
-								},
-								"destination": {
-									"table": "SubTaskLog"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "SubTaskLogId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "SubTaskLogId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "SubTaskId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "SubTaskId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "StudentId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "StudentId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "ReviewerId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "ReviewerId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "Comment",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Comment",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Score",
-													"type": "Decimal",
-													"physicalType": "decimal",
-													"scale": 2,
-													"precision": 8
-												},
-												"sink": {
-													"name": "Score",
-													"type": "Decimal"
-												}
-											},
-											{
-												"source": {
-													"name": "OnTime",
-													"type": "Decimal",
-													"physicalType": "decimal",
-													"scale": 2,
-													"precision": 8
-												},
-												"sink": {
-													"name": "OnTime",
-													"type": "Decimal"
-												}
-											},
-											{
-												"source": {
-													"name": "Accuracy",
-													"type": "Decimal",
-													"physicalType": "decimal",
-													"scale": 2,
-													"precision": 8
-												},
-												"sink": {
-													"name": "Accuracy",
-													"type": "Decimal"
-												}
-											},
-											{
-												"source": {
-													"name": "Extra",
-													"type": "Decimal",
-													"physicalType": "decimal",
-													"scale": 2,
-													"precision": 8
-												},
-												"sink": {
-													"name": "Extra",
-													"type": "Decimal"
-												}
-											},
-											{
-												"source": {
-													"name": "TotalScore",
-													"type": "Decimal",
-													"physicalType": "decimal",
-													"scale": 2,
-													"precision": 11
-												},
-												"sink": {
-													"name": "TotalScore",
-													"type": "Decimal"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysCreatedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysChangedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysCreatedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysChangedBy",
-													"type": "Int32"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "Task"
-								},
-								"destination": {
-									"table": "Task"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "TaskId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "TaskId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "Name",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Name",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Description",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Description",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Topic",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Topic",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysCreatedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysChangedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysCreatedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysChangedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "CourseId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "CourseId",
-													"type": "Int32"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "TaskBackup"
-								},
-								"destination": {
-									"table": "TaskBackup"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "TaskId",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "TaskId",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "TaskName",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "TaskName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "TaskNumber",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "TaskNumber",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Description",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Description",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Topic",
-													"type": "String",
-													"physicalType": "nvarchar"
-												},
-												"sink": {
-													"name": "Topic",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysCreatedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedAt",
-													"type": "DateTime",
-													"physicalType": "datetime"
-												},
-												"sink": {
-													"name": "sysChangedAt",
-													"type": "DateTime"
-												}
-											},
-											{
-												"source": {
-													"name": "sysCreatedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysCreatedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "sysChangedBy",
-													"type": "Int32",
-													"physicalType": "int"
-												},
-												"sink": {
-													"name": "sysChangedBy",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "SubTaskNumber",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "SubTaskNumber",
-													"type": "String"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							}
-						]
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_a90')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_a90')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/unstatistic-extract-countries')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -943,15 +202,13 @@
 						"inputs": [
 							{
 								"referenceName": "src_csv_countries",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "dst_sql_countries",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1111,11 +368,7 @@
 					"extract"
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/src_csv_countries')]",
-				"[concat(variables('factoryId'), '/datasets/dst_sql_countries')]",
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/unstatistic-extract-population')]",
@@ -1919,15 +1172,13 @@
 						"inputs": [
 							{
 								"referenceName": "src_csv_population",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "dst_sql_population_untyped",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -2089,8 +1340,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/src_csv_population')]",
-				"[concat(variables('factoryId'), '/datasets/dst_sql_population_untyped')]",
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
+				"[concat(variables('factoryId'), '/datasets/dst_sql_population_untyped')]"
 			]
 		},
 		{
@@ -2229,8 +1479,7 @@
 						"outputs": [
 							{
 								"referenceName": "dst_sql_uncrime_untyped",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -2358,8 +1607,7 @@
 							},
 							"dataset": {
 								"referenceName": "dst_sql_dummy",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					}
@@ -2398,159 +1646,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/src_csv_uncrime')]",
 				"[concat(variables('factoryId'), '/datasets/dst_sql_uncrime_untyped')]",
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]",
 				"[concat(variables('factoryId'), '/datasets/dst_sql_dummy')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_a90')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "unstatisticsqlsgkdevlinkedservice",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "task",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_a90')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "msbiazurelinkedservice",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "task",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/msbiazurelinkedservice')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dst_sql_countries')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "unstatisticsqlsgkdevlinkedservice",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "SourceItemId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "alpha-2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "alpha-3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "country-code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "iso_3166-2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sub-region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "intermediate-region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "region-code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sub-region-code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "intermediate-region-code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sysCreatedAt",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "sysChangedAt",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "sysChangedBy",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sysCreatedBy",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "staging",
-					"table": "countriesref_untyped"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
 			]
 		},
 		{
@@ -2564,12 +1660,9 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
+				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dst_sql_population_untyped')]",
@@ -2875,9 +1968,7 @@
 					"table": "population_untyped"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dst_sql_uncrime_untyped')]",
@@ -2948,83 +2039,7 @@
 					"table": "uncrime_untyped"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticsqlsgkdevlinkedservice')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/src_csv_countries')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "unstatisticstac",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "ISOcountries.csv",
-						"folderPath": "CrimeStat.Source.Countries",
-						"container": "unstatistic-sourcefiles"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "name",
-						"type": "String"
-					},
-					{
-						"name": "alpha-2",
-						"type": "String"
-					},
-					{
-						"name": "alpha-3",
-						"type": "String"
-					},
-					{
-						"name": "country-code",
-						"type": "String"
-					},
-					{
-						"name": "iso_3166-2",
-						"type": "String"
-					},
-					{
-						"name": "region",
-						"type": "String"
-					},
-					{
-						"name": "sub-region",
-						"type": "String"
-					},
-					{
-						"name": "intermediate-region",
-						"type": "String"
-					},
-					{
-						"name": "region-code",
-						"type": "String"
-					},
-					{
-						"name": "sub-region-code",
-						"type": "String"
-					},
-					{
-						"name": "intermediate-region-code",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/src_csv_population')]",
@@ -3300,9 +2315,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/src_csv_uncrime')]",
@@ -3352,83 +2365,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/unstatisticstac')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/msbiazurelinkedservice')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('msbiazurelinkedservice_connectionString')]"
-				}
-			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/unstatisticsqlsgkdevlinkedservice')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('unstatisticsqlsgkdevlinkedservice_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/unstatisticstac')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('unstatisticstac_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/first_trigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "first_pipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-09-08T11:19:00Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"hours": [
-								15
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/first_pipeline')]"
-			]
 		}
 	]
 }
